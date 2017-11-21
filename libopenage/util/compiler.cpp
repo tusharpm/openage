@@ -2,7 +2,7 @@
 
 #include "compiler.h"
 
-#ifndef _MSC_VER
+#ifndef _WIN32
 #include <cxxabi.h>
 #include <dlfcn.h>
 #endif
@@ -16,7 +16,7 @@ namespace util {
 
 
 std::string demangle(const char *symbol) {
-#ifdef _MSC_VER
+#ifdef _WIN32
 	// TODO: demangle names for MSVC; Possibly using UnDecorateSymbolName
 	// https://msdn.microsoft.com/en-us/library/windows/desktop/ms681400(v=vs.85).aspx
 	return symbol;
@@ -41,7 +41,7 @@ std::string addr_to_string(const void *addr) {
 
 
 std::string symbol_name(const void *addr, bool require_exact_addr, bool no_pure_addrs) {
-#ifdef _MSC_VER
+#ifdef _WIN32
 	// TODO: implement symbol_name for MSVC; Possibly using SymFromAddr
 	// https://msdn.microsoft.com/en-us/library/windows/desktop/ms681323(v=vs.85).aspx
 	return no_pure_addrs ? "" : addr_to_string(addr);
@@ -72,7 +72,7 @@ std::string symbol_name(const void *addr, bool require_exact_addr, bool no_pure_
 
 
 bool is_symbol(const void *addr) {
-#ifdef _MSC_VER
+#ifdef _WIN32
 	// TODO: Get dladdr equivalent for MSVC.
 	return true;
 #else

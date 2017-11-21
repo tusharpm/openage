@@ -105,6 +105,11 @@ function(add_cython_modules)
 
 				# TODO: use full ldflags and cflags provided by python${VERSION}-config
 				target_link_libraries("${TARGETNAME}" ${PYEXT_LIBRARY})
+				if(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+					set_target_properties("${TARGETNAME}" PROPERTIES
+						LINK_FLAGS "-municode"
+					)
+				endif()
 			else()
 				set_property(GLOBAL APPEND PROPERTY SFT_CYTHON_MODULES "${source}")
 				add_library("${TARGETNAME}" MODULE "${CPPNAME}")
@@ -113,8 +118,7 @@ function(add_cython_modules)
 					PREFIX ""
 					SUFFIX "${PYEXT_SUFFIX}"
 				)
-
-				if(MSVC)
+				if(WIN32)
 					target_link_libraries("${TARGETNAME}" ${PYEXT_LIBRARY})
 				endif()
 			endif()

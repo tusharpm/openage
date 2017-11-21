@@ -192,7 +192,7 @@ void StackAnalyzer::get_symbols(std::function<void (const backtrace_symbol *)> c
 
 #else // WITHOUT_BACKTRACE
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 #include <windows.h>
 
 namespace openage {
